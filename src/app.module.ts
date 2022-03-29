@@ -5,13 +5,18 @@ import { TextController } from './text/text.controller';
 import { CatModule } from './cat/cat.module';
 import TextService from './text/text.service';
 import { MongooseModule } from '@nestjs/mongoose';
-// import { CatController } from './cat/cat.controller';
-// import { CatService } from './cat/cat.service';
-// import { Cat, CatSchema } from './cat/schema/catSchema';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/nest'),
     CatModule,
+    UserModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController, TextController],
   providers: [AppService, TextService],

@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
-import { catchError } from 'rxjs';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { CatService } from './cat.service';
 import { CreateCatDto } from './Dto';
 
@@ -11,7 +10,6 @@ export class CatController {
     constructor(private catService:CatService){}
     @Get()
     getCats(){
-        console.log("cats")
         return this.catService.getAll()
     }
     @Post()

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prettier/prettier */
 import {Model} from "mongoose"
-import {HttpCode, HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CatDocument,Cat } from "./schema/catSchema";
 import { InjectModel } from "@nestjs/mongoose";
 import { CreateCatDto } from "./Dto";
@@ -11,7 +11,6 @@ import { CreateCatDto } from "./Dto";
 export class CatService {
     constructor(@InjectModel(Cat.name) private  catModel: Model<CatDocument>){}
     async getAll() : Promise<Cat[]>{
-        console.log("car")
         return await this.catModel.find()
     }
     async createCat(catDto:CreateCatDto): Promise<Cat>{
@@ -32,7 +31,6 @@ export class CatService {
     }
     async updateCat(catId:number,dto:CreateCatDto):Promise<Cat>{
         const cat = await this.catModel.findOne({id:{$eq:catId}})
-        console.log(cat)
         if(!cat){
             throw new HttpException({status:HttpStatus.NOT_FOUND,message:"Cat with id not found"},HttpStatus.NOT_FOUND)
         }else{
