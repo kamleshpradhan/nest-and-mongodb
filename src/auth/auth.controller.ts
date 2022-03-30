@@ -12,8 +12,6 @@ export class AuthController{
 
     @Post('signin')
         async signin(@Body() dto:AuthDto){
-            const user =  await this.authService.validateUser(dto.email,dto.password)
-            const token = await this.authService.signToken(user.email)
-            return{user:user,token:token}
+            return await this.authService.login(dto)
         }
 }

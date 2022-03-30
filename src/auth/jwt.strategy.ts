@@ -2,7 +2,6 @@
 import { HttpException,HttpStatus,Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import {ExtractJwt,Strategy} from "passport-jwt"
-import { jwtConstants } from "./constants";
 import { ConfigService } from "@nestjs/config";
 import { UserService } from "src/user/user.service";
 @Injectable()
@@ -18,8 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         });
     }
     async validate(payload:any){
-        console.log(payload)
-        return
+        const email = payload.useremail
+        const user = await this.userService.findByemail(email)
+        if(!user){
+            throw new HttpException({status:HttpStatus.CONFLICT,message:"Invalid Token"},HttpStatus.CONFLICT)
+        }else{
+            return user
+        }
     }
     
 }

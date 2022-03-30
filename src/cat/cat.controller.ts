@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,UseGuards } from '@nestjs/common';
 import { CatService } from './cat.service';
 import { CreateCatDto } from './Dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
-
-
+@UseGuards(JwtAuthGuard)
 @Controller('cat')
 export class CatController {
     constructor(private catService:CatService){}

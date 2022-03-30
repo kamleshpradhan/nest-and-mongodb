@@ -16,13 +16,20 @@ export class UserService {
   async getAlluser(): Promise<User[]> {
     return await this.userModel.find();
   }
+  async findByemail(useremail:string): Promise<User>{
+    const user = await this.userModel.findOne({email:{$eq:useremail}})
+    if(!user){
+      return null
+    }else{
+      return user;
+    }
+  }
   async findOne(useremail:string,password:string): Promise<User>{
     const user = await this.userModel.findOne({email:{$eq:useremail}})
     if(!user){
       throw new HttpException({status:HttpStatus.NOT_FOUND,message:"Invalid credentials"},HttpStatus.NOT_FOUND)
     }else{
       const  passwordCompare = await bcrypt.compare(password,user.password)
-      console.log(passwordCompare)
       if(passwordCompare){
         return user
       }else{
